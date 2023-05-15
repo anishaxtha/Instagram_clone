@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ig_clone/screens/auth/login_screen.dart';
 import 'package:ig_clone/screens/home_screen.dart';
+import 'package:ig_clone/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -24,7 +25,8 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LoginScreen(),
+     // splashScreen:SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

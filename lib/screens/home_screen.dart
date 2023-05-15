@@ -52,19 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: '',
+            label: 'home',
           ),
           NavigationDestination(
             icon: Icon(Icons.search),
-            label: '',
+            label: 'search',
           ),
           NavigationDestination(
             icon: Icon(Icons.add),
-            label: '',
+            label: 'add',
           ),
           NavigationDestination(
             icon: Icon(Icons.person),
-            label: '',
+            label: 'profile',
           ),
         ],
       ),
