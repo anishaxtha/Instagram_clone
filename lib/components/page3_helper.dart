@@ -1,13 +1,12 @@
 //Upload Photo
 import 'package:flutter/material.dart';
-import '../../components/page3_helper.dart';
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:AppBar(
+class FeedHelper extends ChangeNotifier {
+ // ConstantColors constantColors = ConstantColors();
+
+  
+  Widget appBar(BuildContext context, {required bool centerTitle}) {
+    return AppBar(
       centerTitle :true,
      actions: [
       IconButton(
@@ -41,24 +40,6 @@ class MyWidget extends StatelessWidget {
       ]
      ))
      
-    ),
-  
-  
-  
-  
-
-       
-        
-     // appBar:Provider.of<FeedHelper>(context,listen:false).appBar(context), 
-      body: SafeArea
-      
-      (child: 
-      Center(
-       
-       
-        
-      )
-      ),
     );
   }
 }

@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:ig_clone/firebase_options.dart';
 import 'package:ig_clone/screens/auth/login_screen.dart';
 import 'package:ig_clone/screens/home_screen.dart';
 import 'package:ig_clone/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_picture_uploader/firebase_picture_uploader.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-void main() {
+//import 'package:ig_clone/firebase_options.dart';
+
+
+
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -12,6 +25,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: "Instagram",
       theme: ThemeData(
@@ -27,6 +41,9 @@ class MainApp extends StatelessWidget {
       ),
      // splashScreen:SplashScreen(),
       home: SplashScreen(),
+      
+      
     );
+    
   }
 }

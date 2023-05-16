@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../components/button.dart';
 import '../../components/square_tile.dart';
@@ -5,13 +6,16 @@ import '../../components/textfield.dart';
 import '../home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-const LoginScreen({super.key});
+  const LoginScreen({super.key});
+
+
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
   // when pressed login screen
   void onLogin() {
     Navigator.pushReplacement(
@@ -22,9 +26,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  
+
   final usernameController =TextEditingController();
   final passwordController =TextEditingController();
-  void SignUserIn(){}
+  void SignUserIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: usernameController.text, 
+      password: passwordController.text
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 //sign_in_button
           button(
             onTap: onLogin,
+           // onTap: (){},
             onPressed: (){},
             
           ),
@@ -110,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                children: [
              
                //google
-              squaretile(imagepath: 'images/apple_logo.png'),
+              squaretile(imagepath: 'images/phone.png'),
            SizedBox(
            width:10 ,
         ),
@@ -148,3 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+ 
+
