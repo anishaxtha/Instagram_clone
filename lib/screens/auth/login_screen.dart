@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final usernameController =TextEditingController();
   final passwordController =TextEditingController();
-  void SignUserIn() async{
+  void signUserIn() async{
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: usernameController.text, 
       password: passwordController.text
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 //sign_in_button
           button(
-            onTap: onLogin,
+            onTap:signUserIn,
            // onTap: (){},
             onPressed: (){},
             
