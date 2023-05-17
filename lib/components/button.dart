@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class button extends StatelessWidget {
+class BgButton extends StatelessWidget {
    final Function()? onTap;
+   final String label;
   
-  const button({super.key,
-  required this.onTap, required Null Function() onPressed});
+  const BgButton({super.key,required this.label,
+  required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class button extends StatelessWidget {
           
         ),
         child: Center(
-          child: Text('Log In',
+          child: Text(label,
           style: TextStyle(
             color: Colors.white,
             fontSize: 15,

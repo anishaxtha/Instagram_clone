@@ -96,9 +96,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 25
                   ),
                 //sign_in_button
-          button(
+          BgButton(
             onTap: onLogin,
-            onPressed: (){},
+           // onPressed: (){},
             
           ),
           SizedBox(

@@ -12,9 +12,12 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
+  
 }
 
+
 class _LoginScreenState extends State<LoginScreen> {
+  
   
   // when pressed login screen
   void onLogin() {
@@ -36,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       password: passwordController.text
       );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +105,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 25
                   ),
                 //sign_in_button
-          button(
+          BgButton(
+
+            label:"login",
             onTap:signUserIn,
            // onTap: (){},
-            onPressed: (){},
+            //onPressed: (){},
             
           ),
           SizedBox(
@@ -121,13 +127,13 @@ class _LoginScreenState extends State<LoginScreen> {
                mainAxisAlignment:MainAxisAlignment.center,
                children: [
              
-               //google
-              squaretile(imagepath: 'images/phone.png'),
+               //phone
+              squaretile(imagepath: 'assets/images/phone.png'),
            SizedBox(
            width:10 ,
         ),
-               //apple
-               squaretile(imagepath: 'images/google_logo.png'),
+               //google
+               squaretile(imagepath: 'assets/images/google_logo.png'),
          
                ],) , 
                
