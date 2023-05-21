@@ -1,75 +1,100 @@
-//home
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageUploadPage extends StatefulWidget {
+import '../utils/colors.dart';
+import '../utils/global_variables.dart';
+import '../widget/post_card.dart';
+
+class ImageUpload extends StatefulWidget {
   @override
-  _ImageUploadPageState createState() => _ImageUploadPageState();
+  _ImageUploadState createState() => _ImageUploadState();
 }
 
-class _ImageUploadPageState extends State<ImageUploadPage> {
+class _ImageUploadState extends State<ImageUpload> {
   File? _imageFile;
-  String? _uploadedImageUrl;
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.getImage(source: ImageSource.gallery);
-    
-    setState(() {
-      if (pickedImage != null) {
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().getImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
         _imageFile = File(pickedImage.path);
-      }
-    });
+      });
+    }
   }
 
-  Future<void> _uploadImage() async {
-    if (_imageFile == null) {
-      return;
-    }
-    
-    final storageReference = FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-    final uploadTask = storageReference.putFile(_imageFile!);
-    final snapshot = await uploadTask.whenComplete(() {});
-
-    if (snapshot.state == TaskState.success) {
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-      setState(() {
-        _uploadedImageUrl = downloadUrl;
-      });
+  Widget _buildImagePreview() {
+    if (_imageFile != null) {
+      if (kIsWeb) {
+        // For Flutter Web, use Image.network instead of Image.file
+        return Image.network(_imageFile!.path);
+      } else {
+        return Image.file(_imageFile!);
+      }
+    } else {
+      return Text('No image selected');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Upload'),
-      ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: _pickImage,
-            child: Text('Select Image'),
-          ),
-          SizedBox(height: 20.0),
-          _imageFile != null
-              ? Image.file(_imageFile!)
-              : Text('No image selected'),
-          SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: _uploadImage,
-            child: Text('Upload Image'),
-          ),
-          SizedBox(height: 20.0),
-          _uploadedImageUrl != null
-              ? Image.network(_uploadedImageUrl!)
-              : Container(),
-        ],
+       backgroundColor:
+          width > webScreenSize ? webBackgroundColor : mobileBackgroundColor,
+      appBar: width > webScreenSize
+          ? null
+          : AppBar(
+              backgroundColor: mobileBackgroundColor,
+              centerTitle: false,
+              title: SvgPicture.asset(
+                'assets/images/instagram.svg',
+                color: primaryColor,
+                height: 32,
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.messenger_outline,
+                    color: primaryColor,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (ctx, index) => Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: width > webScreenSize ? width * 0.3 : 0,
+                vertical: width > webScreenSize ? 15 : 0,
+              ),
+              child: PostCard(
+                snap: snapshot.data!.docs[index].data(),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: ImageUpload(),
+  ));
 }

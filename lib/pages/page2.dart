@@ -1,65 +1,64 @@
-import 'dart:typed_data';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(ImageUploaderApp());
-}
-
-class ImageUploaderApp extends StatelessWidget {
+class ImageUploadScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Image Uploader',
-      home: ImageUploader(),
-    );
-  }
+  _ImageUploadScreenState createState() => _ImageUploadScreenState();
 }
 
-class ImageUploader extends StatefulWidget {
-  @override
-  _ImageUploaderState createState() => _ImageUploaderState();
-}
+class _ImageUploadScreenState extends State<ImageUploadScreen> {
+  File? _imageFile;
 
-class _ImageUploaderState extends State<ImageUploader> {
-  final picker = ImagePicker();
-
-  Future pickImage() async {
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().getImage(source: source);
     if (pickedImage != null) {
-      Uint8List imageBytes = await pickedImage.readAsBytes();
-      uploadImageToFirebase(imageBytes);
+      setState(() {
+        _imageFile = File(pickedImage.path);
+      });
     }
   }
 
-  Future uploadImageToFirebase(Uint8List imageBytes) async {
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference reference = storage.ref().child('images/${DateTime.now()}.png');
-    UploadTask uploadTask = reference.putData(imageBytes);
-
-    await uploadTask.whenComplete(() {});
-    String downloadUrl = await reference.getDownloadURL();
-
-    print('Download URL: $downloadUrl');
+  Widget _buildImagePreview() {
+    if (_imageFile != null) {
+      if (kIsWeb) {
+        // For Flutter Web, use Image.network instead of Image.file
+        return Image.network(_imageFile!.path);
+      } else {
+        return Image.file(_imageFile!);
+      }
+    } else {
+      return Text('No image selected');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Uploader'),
+        title: Text('Image Upload'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: pickImage,
-          child: Text('Upload Image'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildImagePreview(),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _pickImage(ImageSource.gallery),
+              child: Text('Select Image'),
+            ),
+          ],
         ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: ImageUploadScreen(),
+  ));
 }

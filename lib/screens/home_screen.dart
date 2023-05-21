@@ -10,7 +10,7 @@ import 'package:ig_clone/pages/page4.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(ImageUploader());
+  runApp(ImageUploadScreen());
 }
 
 class HomeScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.center,
               child: const Text('Page 1'),
             ),
-            ImageUploader(), // Assuming ImageUploader is defined in page2.dart
+            ImageUploadScreen(), // Assuming ImageUploader is defined in page2.dart
             const AddPostScreen(),
             const FeedScreen(),
           ],

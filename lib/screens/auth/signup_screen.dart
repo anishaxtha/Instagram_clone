@@ -4,10 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ig_clone/firebase_options.dart';
 import '../../resources/auth_methods.dart';
+import '../../responsive/mobile_screen_layout.dart';
 import '../../responsive/responsive_layout.dart';
+import '../../responsive/web_screen_layout.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
 import '../../widget/textfield.dart';
+import '../home_screen.dart';
 import 'login.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -52,14 +55,14 @@ class _SignupScreenState extends State<SignupScreen> {
         _isLoading = false;
       });
       // navigate to the home screen
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //     builder: (context) => const ResponsiveLayout(
-      //       mobileScreenLayout: MobileScreenLayout(),
-      //       webScreenLayout: WebScreenLayout(),
-      //     ),
-      //   ),
-      // );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     } else {
       setState(() {
         _isLoading = false;
@@ -196,7 +199,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => const HomeScreen(),
                       ),
                     ),
                     child: Container(
