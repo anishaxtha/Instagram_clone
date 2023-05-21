@@ -1,10 +1,15 @@
 //Upload Photo
 import 'package:flutter/material.dart';
 
-class FeedHelper extends ChangeNotifier {
+abstract class FeedHelper extends StatelessWidget {
+  const FeedHelper({super.key});
  // ConstantColors constantColors = ConstantColors();
 
-  
+
+ 
+
+}
+  @override
   Widget appBar(BuildContext context, {required bool centerTitle}) {
     return AppBar(
       centerTitle :true,
@@ -42,4 +47,6 @@ class FeedHelper extends ChangeNotifier {
      
     );
   }
-}
+  
+  
+  

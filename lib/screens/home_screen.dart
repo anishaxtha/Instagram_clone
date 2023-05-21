@@ -1,8 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ig_clone/pages/page3.dart';
+import 'package:ig_clone/pages/page1.dart';
+import 'package:ig_clone/pages/page2.dart';
+import 'package:ig_clone/pages/page4.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(ImageUploader());
+}
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,28 +31,19 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: <Widget>[
-          Container(
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: const Text('Page 1'),
-          ),
-          Container(
-            color: Colors.green,
-            alignment: Alignment.center,
-            child: const Text('Page 2'),
-          ),
-          Container(
-            color: Colors.blue,
-            alignment: Alignment.center,
-            child: const Text('Page 3'),
-          ),
-          Container(
-            color: Colors.purple,
-            alignment: Alignment.center,
-            child: const Text('Page 4'),
-          ),
-        ][currentPageIndex],
+        child: IndexedStack(
+          index: currentPageIndex,
+          children: [
+            Container(
+              color: Colors.white,
+              alignment: Alignment.center,
+              child: const Text('Page 1'),
+            ),
+            ImageUploader(), // Assuming ImageUploader is defined in page2.dart
+            const AddPostScreen(),
+            const FeedScreen(),
+          ],
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {

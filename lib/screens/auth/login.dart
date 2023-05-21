@@ -1,178 +1,156 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import '../../components/button.dart';
-import '../../components/divider.dart';
-import '../../components/textfield.dart';
-import '../components/divider.dart';
-import '../components/square_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ig_clone/screens/auth/signup_screen.dart';
 
-class login extends StatelessWidget {
-   login({super.key});
+import '../../resources/auth_methods.dart';
+import '../../responsive/mobile_screen_layout.dart';
+import '../../responsive/responsive_layout.dart';
+import '../../responsive/web_screen_layout.dart';
+import '../../utils/colors.dart';
+import '../../utils/global_variables.dart';
+import '../../utils/utils.dart';
+import '../../widget/textfield.dart';
 
-  ///text editing controller
-  final usernameController =TextEditingController();
-  final passwordController =TextEditingController();
-
-//button
-void SignUserIn(){}
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body:Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Center(
-          child: Column(
-            children:[
-            SizedBox(
-              height: 50,
-            ),
-              //logo
-              Icon(Icons.facebook,size: 100,color: Colors.blue,),
-        
-              //text
-        Text("Welcome to facebook.com",
-        style: TextStyle(
-          fontSize: 16,
-          //fontWeight:FontWeight.bold,
-          color:Colors.grey[700],
-      
-        )),
-        SizedBox(height: 25,),
-              //username_textfield
-         textfield(
-          Controller: usernameController,
-          hintText: 'Username',
-          obscureText: false,
-         ),
-              //password_textfield
-              SizedBox(
-                height: 10
-                ),
-        textfield(
-          Controller:passwordController ,
-          hintText: 'Password',
-          obscureText: true,
-        ),
-        SizedBox(
-                height: 10
-                ),
-              //forget password?
-        Row(
-           mainAxisAlignment:MainAxisAlignment.center,
-          children: [
-           
-            Text("forgot password?",
-            style: TextStyle(color: Colors.blue,
-            ),
-            ),
-          ],
-        ),
-        SizedBox(
-                height: 25
-                ),
-              //sign_in_button
-        // button(
-        //   onTap: SignUserIn,
-        // ),
-        SizedBox(
-          height:20,
-        ),
-              //or continue with
-
-       
-         //google + apple sign in button or
-         SizedBox(
-     height:30 ,
-      ),
-           Row(
-             mainAxisAlignment:MainAxisAlignment.center,
-             children: [
-           
-             //google
-            squaretile(imagepath: 'lib/images/apple_logo.png'),
-     SizedBox(
-     width:10 ,
-      ),
-             //apple
-             squaretile(imagepath: 'lib/images/google_logo.png'),
-   
-             ],) , 
-             
-             SizedBox(
-              height:10
-             ),
-        
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          
-          Text("Not a Member?"),
-          SizedBox(
-            width:10 ,
-          ),
-          Text("Register Now",
-          style:TextStyle(color:Colors.blue)),
-
-        ],)
-              //not a member ?register now
-        
-            ],
-            
-            
-          ),
-          
-        ),
-      ),
-
-    );
-
-  }
-}
-
-
-/*
-import 'package:flutter/material.dart';
-import '../home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // when pressed login screen
-  void onLogin() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const HomeScreen(),
-      ),
-    );
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    if (res == 'success') {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
+          ),
+          (route) => false);
+
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      showSnackBar(context, res);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login to Instagram"),
-        centerTitle: true,
-      ),
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Center(
+        child: Container(
+          padding: MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 3)
+              : const EdgeInsets.symmetric(horizontal: 32),
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
-                onPressed: () {
-                  onLogin();
-                },
-                child: Text("Login"),
+              Flexible(
+                child: Container(),
+                flex: 2,
+              ),
+              Image.asset("images/insta.png",height: 100,width: 100),
+              const SizedBox(
+                height: 30,
+              ),
+              TextFieldInput(
+                hintText: 'Enter your email',
+                textInputType: TextInputType.emailAddress,
+                textEditingController: _emailController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFieldInput(
+                hintText: 'Enter your password',
+                textInputType: TextInputType.text,
+                textEditingController: _passwordController,
+                isPass: true,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              InkWell(
+                child: Container(
+                  child: !_isLoading
+                      ? const Text(
+                          'Log in',
+                        )
+                      : const CircularProgressIndicator(
+                          color: primaryColor,
+                        ),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: const ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    color: blueColor,
+                  ),
+                ),
+                onTap: loginUser,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Flexible(
+                child: Container(),
+                flex: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: const Text(
+                      'Dont have an account?',
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SignupScreen(),
+                      ),
+                    ),
+                    child: Container(
+                      child: const Text(
+                        ' Signup.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -181,4 +159,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-*/

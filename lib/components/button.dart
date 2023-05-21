@@ -3,12 +3,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class BgButton extends StatelessWidget {
-   final Function()? onTap;
-   final String label;
   
   const BgButton({super.key,required this.label,
   required this.onTap});
-
+   final Function()? onTap;
+   final String label;
+   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
