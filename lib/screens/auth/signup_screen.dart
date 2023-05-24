@@ -10,7 +10,7 @@ import '../../responsive/web_screen_layout.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
 import '../../widget/textfield.dart';
-import '../home_screen.dart';
+import '../profile/home_screen.dart';
 import 'login.dart';
 
 class SignupScreen extends StatefulWidget {

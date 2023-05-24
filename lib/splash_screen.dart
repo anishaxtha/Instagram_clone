@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ig_clone/screens/auth/login.dart';
-import 'package:ig_clone/screens/auth/login_screen.dart';
-import 'package:ig_clone/screens/home_screen.dart';
+// import 'package:ig_clone/screens/auth/login_screen.dart';
+// import 'package:ig_clone/screens/home_screen.dart';
 import '../../components/button.dart';
 import '../../components/square_tile.dart';
 import '../../components/textfield.dart';

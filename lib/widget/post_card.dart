@@ -210,7 +210,7 @@ class _PostCardState extends State<PostCard> {
                 child: IconButton(
                   icon: widget.snap['likes'].contains(user.uid)
                       ? const Icon(
-                          Icons.favorite,
+                          Icons.chat_bubble_outline,
                           color: Colors.red,
                         )
                       : const Icon(
