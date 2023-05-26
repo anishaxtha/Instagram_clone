@@ -52,10 +52,10 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: mobileBackgroundColor,
         flexibleSpace: FlexibleSpaceBar(
           background: SvgPicture.asset(
-            "images/insta.svg",
+            "assets/images/insta.svg",
             semanticsLabel: 'SVG Image',
-            height: 80,
-            width: 80,
+            height: 40,
+            width: 40,
             // fit: BoxFit.cover,
           ),
         ),

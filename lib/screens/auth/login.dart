@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(),
                 flex: 2,
               ),
-              Image.asset("images/insta.png",height: 100,width: 100),
+              Image.asset("assets/images/insta.png",height: 100,width: 100),
               const SizedBox(
                 height: 30,
               ),

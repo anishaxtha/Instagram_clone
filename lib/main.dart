@@ -51,7 +51,15 @@ void main() async {
   )
     );
   } else {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+    options: const FirebaseOptions(
+    apiKey: 'AIzaSyCyIjQBqCMRYCO1VLGX3SqxeQd6jJ_kBds',
+    appId: '1:174566426839:android:88b87e4e78d855951b4892',
+    messagingSenderId: '174566426839',
+    projectId: 'instagramproject-e6ec7',
+    storageBucket: 'instagramproject-e6ec7.appspot.com',
+  )
+    );
   }
   runApp(const MyApp());
 }
@@ -82,10 +90,14 @@ class MyApp extends StatelessWidget {
               // Checking if the snapshot has any data or not
               if (snapshot.hasData) {
                 // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-                return const SplashScreen(
-                  //mobileScreenLayout: MobileScreenLayout(),
-                //  webScreenLayout: WebScreenLayout(),
+                return const ResponsiveLayout(
+                  mobileScreenLayout: MobileScreenLayout(),
+                  webScreenLayout: WebScreenLayout(),
                 );
+                //  return const SplashScreen(
+                //   mobileScreenLayout: MobileScreenLayout(),
+                //  webScreenLayout: WebScreenLayout(),
+                // );
               }
             }
 
