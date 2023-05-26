@@ -6,8 +6,8 @@ import 'package:ig_clone/pages/page4.dart';
 import 'package:ig_clone/responsive/mobile_screen_layout.dart';
 import 'package:ig_clone/responsive/web_screen_layout.dart';
 import 'package:ig_clone/screens/auth/login.dart';
-import 'package:ig_clone/screens/auth/login_screen.dart';
-import 'package:ig_clone/screens/home_screen.dart';
+// import 'package:ig_clone/screens/auth/login_screen.dart';
+// import 'package:ig_clone/screens/home_screen.dart';
 import 'package:ig_clone/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,55 +20,15 @@ import 'package:ig_clone/firebase_options.dart';
 
 
 
-// void main() async {
-//    WidgetsFlutterBinding.ensureInitialized();
-//    await Firebase.initializeApp(
-//    options: DefaultFirebaseOptions.currentPlatform);// dont include "options: DefaultFirebaseOptions.currentPlatform" if you havn't used Flutter Fire
-//    runApp(MainApp());
-// }
 
-// class MainApp extends StatelessWidget {
-//   const MainApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider(create: (_) => UserProvider(),),
-//       ],
-//       child: MaterialApp(
-//     //return MaterialApp(
-//       title: "Instagram",
-//       theme: ThemeData(
-//         useMaterial3: true,
-//         textButtonTheme: TextButtonThemeData(
-//           style: TextButton.styleFrom(
-//             foregroundColor: Colors.white,
-//             backgroundColor: const Color(0xFFfb0070),
-//             padding:
-//                 const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
-//           ),
-//         ),
-//       ),
-//      // splashScreen:SplashScreen(),
-//       home: FeedScreen(),
-      
-      
-//     )
-//     );
-    
-//   }
-// }
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../provider/user_provider.dart';
-// import 'package:instagram_clone_flutter/responsive/mobile_screen_layout.dart';
-// import 'package:instagram_clone_flutter/responsive/responsive_layout.dart';
-// import 'package:instagram_clone_flutter/responsive/web_screen_layout.dart';
-import '../screens/auth/login_screen.dart';
+
+// import '../screens/auth/login_screen.dart';
 import '../utils/colors.dart';
 import 'package:provider/provider.dart';
 
